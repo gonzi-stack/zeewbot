@@ -41,7 +41,7 @@ export class WelcomeService {
         members: [member],
         timeout,
         createdAt: Date.now(),
-        lastUpdate: Date.now()
+        lastUpdate: Date.now(),
       });
       
       this.client.logger.info(`Started new welcome group for ${member.user.tag}`);
@@ -87,7 +87,7 @@ export class WelcomeService {
 
       await welcomeChannel.send({
         content: message,
-        allowedMentions: { users: pending.members.map(m => m.id) }
+        allowedMentions: { users: pending.members.map(m => m.id) },
       });
 
       // Asignar rol de miembro si está configurado
@@ -145,7 +145,7 @@ export class WelcomeService {
       status.push({
         guildId,
         memberCount: pending.members.length,
-        waitingTime: now - pending.lastUpdate
+        waitingTime: now - pending.lastUpdate,
       });
     }
     

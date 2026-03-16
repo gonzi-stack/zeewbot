@@ -15,9 +15,9 @@ export const event: IEvent<Events.ClientReady> = {
     client.user?.setPresence({
       activities: [{ 
         name: 'Zeew Space 🚀', 
-        type: 3 // WATCHING
+        type: 3, // WATCHING
       }],
-      status: 'online'
+      status: 'online',
     });
   },
 };

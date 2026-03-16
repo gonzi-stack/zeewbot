@@ -2,9 +2,12 @@ import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
 import { IBot } from '../interfaces/IBot';
 import { ICommand } from '../interfaces/ICommand';
 import { Logger } from 'winston';
+import config from '../../config.json';
 import { WelcomeService } from '../services/WelcomeService';
 import { TicketService } from '../services/TicketService';
 import { TTSService } from '../services/TTSService';
+import { TwitchService } from '../services/TwitchService';
+import { TwitchWebhookServer } from '../utils/TwitchWebhookServer';
 import { DatabaseService } from '../database/DatabaseService';
 
 export class ZeewBot extends Client implements IBot {
@@ -13,6 +16,8 @@ export class ZeewBot extends Client implements IBot {
   public welcomeService: WelcomeService;
   public ticketService: TicketService;
   public ttsService: TTSService;
+  public twitchService: TwitchService;
+  public twitchWebhookServer: TwitchWebhookServer;
   public database: DatabaseService;
 
   constructor(logger: Logger) {
@@ -30,7 +35,7 @@ export class ZeewBot extends Client implements IBot {
         Partials.Message,
         Partials.User,
         Partials.GuildMember,
-        Partials.Reaction
+        Partials.Reaction,
       ],
     });
 
@@ -42,6 +47,53 @@ export class ZeewBot extends Client implements IBot {
     this.ttsService = new TTSService(this);
     this.database = new DatabaseService(process.env.REDIS_URL);
 
+    this.twitchWebhookServer = new TwitchWebhookServer(logger, config.twitch.webhookPort);
+    this.twitchService = new TwitchService(this, this.handleStreamEvent.bind(this));
+
+  }
+
+  private async handleStreamEvent(
+    event: { broadcaster_user_id: string; broadcaster_user_login: string; broadcaster_user_name: string; started_at?: string },
+    type: 'online' | 'offline',
+  ): Promise<void> {
+    if (!config.twitch.announceChannelId) {
+      this.logger.warn('Twitch announce channel not configured');
+      return;
+    }
+
+    const channel = await this.channels.fetch(config.twitch.announceChannelId);
+    if (!channel || !channel.isTextBased() || channel.isDMBased()) {
+      this.logger.error('Twitch announce channel not found or is not text-based');
+      return;
+    }
+
+    if (type === 'online') {
+      const embed = {
+        color: 0x6441a5,
+        title: `🔴 ${event.broadcaster_user_name} está en directo!`,
+        description: `¡${event.broadcaster_user_name} ha comenzado a transmitir en Twitch!`,
+        url: `https://www.twitch.tv/${event.broadcaster_user_login}`,
+        timestamp: event.started_at || new Date().toISOString(),
+        footer: {
+          text: 'Zeew Space',
+        },
+      };
+
+      await channel.send({ embeds: [embed] });
+      this.logger.info(`Stream announcement sent for ${event.broadcaster_user_name}`);
+    } else {
+      const embed = {
+        color: 0x6441a5,
+        title: `⚫ ${event.broadcaster_user_name} está offline`,
+        description: `${event.broadcaster_user_name} ha terminado su transmisión.`,
+        footer: {
+          text: 'Zeew Space',
+        },
+      };
+
+      await channel.send({ embeds: [embed] });
+      this.logger.info(`Offline announcement sent for ${event.broadcaster_user_name}`);
+    }
   }
 
   public async start(token: string): Promise<void> {
@@ -60,6 +112,7 @@ export class ZeewBot extends Client implements IBot {
 
     this.welcomeService.cleanup();
     this.ttsService.cleanup();
+    this.twitchWebhookServer.stop();
 
     await this.database.disconnect();
 

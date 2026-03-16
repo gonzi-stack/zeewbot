@@ -12,7 +12,7 @@ export const logger = winston.createLogger({
     colorize({ all: true }),
     timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     align(),
-    logFormat
+    logFormat,
   ),
   transports: [
     new winston.transports.Console(),

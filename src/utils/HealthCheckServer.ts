@@ -7,7 +7,7 @@ export class HealthCheckServer {
 
   constructor(
     private logger: Logger,
-    private port: number = 3000
+    private port: number = 3000,
   ) {}
 
   public start(healthCheck?: () => boolean): void {
@@ -19,7 +19,7 @@ export class HealthCheckServer {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({
           status: isHealthy ? 'healthy' : 'unhealthy',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         }));
       } else {
         res.statusCode = 404;

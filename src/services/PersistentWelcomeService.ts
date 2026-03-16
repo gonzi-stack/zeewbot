@@ -17,7 +17,7 @@ export class PersistentWelcomeService {
   
   constructor(
     private client: IBot,
-    private database: DatabaseService
+    private database: DatabaseService,
   ) {
     // Verificar bienvenidas pendientes cada minuto
     this.checkInterval = setInterval(() => {
@@ -54,7 +54,7 @@ export class PersistentWelcomeService {
             memberIds: [member.id],
             memberTags: [member.user.tag],
             createdAt: Date.now(),
-            lastUpdate: Date.now()
+            lastUpdate: Date.now(),
           };
           
           await this.database.set(key, JSON.stringify(data), config.welcome.waitTime / 1000);
@@ -150,7 +150,7 @@ export class PersistentWelcomeService {
       
       await welcomeChannel.send({
         content: message,
-        allowedMentions: { users: memberIds }
+        allowedMentions: { users: memberIds },
       });
       
       this.client.logger.info(`Sent welcome message for ${memberIds.length} member(s)`);

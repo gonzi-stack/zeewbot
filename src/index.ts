@@ -37,13 +37,27 @@ async function main() {
       return client.ws.ping > 0 && client.isReady();
     });
 
+    // Iniciar servidor de webhooks de Twitch
+    client.twitchWebhookServer.setWebhookHandler(
+      async (event, type) => {
+        await client.twitchService.handleWebhookEvent(
+          type === 'online' ? 'stream.online' : 'stream.offline',
+          event,
+        );
+      },
+    );
+    client.twitchWebhookServer.start();
+
+    // Inicializar servicio de Twitch
+    await client.twitchService.initialize();
+
     // Desplegar comandos cuando el bot esté listo
     client.once('ready', async () => {
       if (client.user) {
         await commandHandler.deployCommands(
           process.env.DISCORD_TOKEN!,
           client.user.id,
-          config.guildId
+          config.guildId,
         );
       }
     });
@@ -58,6 +72,7 @@ async function main() {
 process.on('SIGINT', async () => {
   logger.info('Received SIGINT signal');
   healthCheckServer.stop();
+  client.twitchWebhookServer.stop();
   await client.shutdown();
   process.exit(0);
 });
@@ -65,6 +80,7 @@ process.on('SIGINT', async () => {
 process.on('SIGTERM', async () => {
   logger.info('Received SIGTERM signal');
   healthCheckServer.stop();
+  client.twitchWebhookServer.stop();
   await client.shutdown();
   process.exit(0);
 });

@@ -21,7 +21,7 @@ export const event: IEvent<Events.InteractionCreate> = {
         
         const reply = {
           content: '❌ Hubo un error al ejecutar este comando.',
-          ephemeral: true
+          ephemeral: true,
         };
         
         if (interaction.replied || interaction.deferred) {
@@ -51,7 +51,7 @@ export const event: IEvent<Events.InteractionCreate> = {
       } else if (interaction.customId === 'claim_ticket') {
         await interaction.reply({
           content: `📌 ${interaction.user} ha reclamado este ticket.`,
-          ephemeral: false
+          ephemeral: false,
         });
       }
     }

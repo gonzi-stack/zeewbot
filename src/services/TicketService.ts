@@ -7,7 +7,7 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  CategoryChannel
+  CategoryChannel,
 } from 'discord.js';
 import { IBot } from '../interfaces/IBot';
 import config from '../../config.json';
@@ -60,7 +60,7 @@ export class TicketService {
               PermissionFlagsBits.SendMessages,
               PermissionFlagsBits.ReadMessageHistory,
               PermissionFlagsBits.AttachFiles,
-              PermissionFlagsBits.EmbedLinks
+              PermissionFlagsBits.EmbedLinks,
             ],
           },
           {
@@ -71,7 +71,7 @@ export class TicketService {
               PermissionFlagsBits.ReadMessageHistory,
               PermissionFlagsBits.ManageMessages,
               PermissionFlagsBits.AttachFiles,
-              PermissionFlagsBits.EmbedLinks
+              PermissionFlagsBits.EmbedLinks,
             ],
           },
         ],
@@ -83,7 +83,7 @@ export class TicketService {
         userId: member.id,
         channelId: ticketChannel.id,
         createdAt: new Date(),
-        closed: false
+        closed: false,
       };
       this.tickets.set(ticketChannel.id, ticket);
       this.incrementUserTicketCount(userId);
@@ -95,7 +95,7 @@ export class TicketService {
         .setDescription(`¡Hola ${member}! Gracias por contactar con el soporte de Zeew Space.\n\n${reason ? `**Motivo:** ${reason}\n\n` : ''}Un miembro del equipo te atenderá pronto.`)
         .addFields(
           { name: '📋 Mientras esperas', value: 'Por favor, describe tu problema o pregunta con el mayor detalle posible.' },
-          { name: '⏰ Tiempo de respuesta', value: 'Normalmente respondemos en menos de 24 horas.' }
+          { name: '⏰ Tiempo de respuesta', value: 'Normalmente respondemos en menos de 24 horas.' },
         )
         .setTimestamp()
         .setFooter({ text: `Ticket ID: ${ticketNumber}` });
@@ -110,13 +110,13 @@ export class TicketService {
           new ButtonBuilder()
             .setCustomId('claim_ticket')
             .setLabel('📌 Reclamar Ticket')
-            .setStyle(ButtonStyle.Primary)
+            .setStyle(ButtonStyle.Primary),
         );
 
       await ticketChannel.send({
         content: `${member} | <@&${config.roles.support}>`,
         embeds: [welcomeEmbed],
-        components: [row]
+        components: [row],
       });
 
       this.client.logger.info(`Ticket created: ${ticketNumber} for user ${member.user.tag}`);
@@ -158,7 +158,7 @@ export class TicketService {
           .setTitle(`📄 Transcripción del Ticket #${ticket.id}`)
           .setDescription(`**Usuario:** <@${ticket.userId}>\n**Cerrado por:** ${closedBy}\n**Duración:** ${this.formatDuration(ticket.createdAt, new Date())}`)
           .addFields(
-            { name: '📊 Estadísticas', value: `Mensajes: ${messages.length}` }
+            { name: '📊 Estadísticas', value: `Mensajes: ${messages.length}` },
           )
           .setTimestamp();
 
@@ -166,8 +166,8 @@ export class TicketService {
           embeds: [transcriptEmbed],
           files: [{
             attachment: Buffer.from(messages.join('\n'), 'utf-8'),
-            name: `transcript-${ticket.id}.txt`
-          }]
+            name: `transcript-${ticket.id}.txt`,
+          }],
         });
       }
 
@@ -195,7 +195,7 @@ export class TicketService {
       while (true) {
         const fetchedMessages = await channel.messages.fetch({
           limit: 100,
-          ...(lastId && { before: lastId })
+          ...(lastId && { before: lastId }),
         });
 
         if (fetchedMessages.size === 0) break;
