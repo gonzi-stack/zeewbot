@@ -5,13 +5,15 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "tsx watch src/index.ts",
+    "start": "concurrently --kill-others --names \"NODELINK,BOT\" --prefix-colors \"red,blue\" \"node scripts/startNodelink.js\" \"node dist/index.js\"",
+    "dev": "concurrently --kill-others --names \"NODELINK,BOT\" --prefix-colors \"red,blue\" \"node scripts/startNodelink.js\" \"tsx watch src/index.ts\"",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "clear-commands": "tsx src/clearCommands.ts",
     "clear-commands:global": "tsx src/clearCommands.ts --global",
-    "manage-commands": "tsx src/manageCommands.ts"
+    "manage-commands": "tsx src/manageCommands.ts",
+    "nodelink": "node scripts/startNodelink.js",
+    "postinstall": "pnpm --prefix nodelink-server install"
   },
   "keywords": [
     "discord",
@@ -31,6 +33,7 @@
     "libsodium-wrappers": "^0.8.2",
     "msedge-tts": "^2.0.4",
     "prism-media": "^1.3.5",
+    "shoukaku": "^4.3.0",
     "winston": "^3.11.0",
     "ws": "^8.17.1"
   },
@@ -38,6 +41,7 @@
     "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
+    "concurrently": "^9.2.1",
     "eslint": "^8.56.0",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"

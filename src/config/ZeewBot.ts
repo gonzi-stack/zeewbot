@@ -6,6 +6,7 @@ import config from '../../config.json';
 import { WelcomeService } from '../services/WelcomeService';
 import { TicketService } from '../services/TicketService';
 import { TTSService } from '../services/TTSService';
+import { MusicService } from '../services/MusicService';
 import { TwitchService } from '../services/TwitchService';
 import { TwitchWebhookServer } from '../utils/TwitchWebhookServer';
 import { DatabaseService } from '../database/DatabaseService';
@@ -16,6 +17,7 @@ export class ZeewBot extends Client implements IBot {
   public welcomeService: WelcomeService;
   public ticketService: TicketService;
   public ttsService: TTSService;
+  public musicService: MusicService;
   public twitchService: TwitchService;
   public twitchWebhookServer: TwitchWebhookServer;
   public database: DatabaseService;
@@ -45,6 +47,7 @@ export class ZeewBot extends Client implements IBot {
     this.welcomeService = new WelcomeService(this);
     this.ticketService = new TicketService(this);
     this.ttsService = new TTSService(this);
+    this.musicService = new MusicService(this);
     this.database = new DatabaseService(process.env.REDIS_URL);
 
     this.twitchWebhookServer = new TwitchWebhookServer(logger, config.twitch.webhookPort);
@@ -112,6 +115,7 @@ export class ZeewBot extends Client implements IBot {
 
     this.welcomeService.cleanup();
     this.ttsService.cleanup();
+    this.musicService.cleanup();
     this.twitchWebhookServer.stop();
 
     await this.database.disconnect();
