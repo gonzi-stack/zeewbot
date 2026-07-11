@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { Events } from 'discord.js';
 import { ZeewBot } from './config/ZeewBot';
 import { CommandHandler } from './handlers/CommandHandler';
 import { EventHandler } from './handlers/EventHandler';
@@ -29,6 +30,18 @@ async function main() {
     await commandHandler.loadCommands();
     await eventHandler.loadEvents();
 
+    // Desplegar comandos cuando el bot esté listo
+    // IMPORTANTE: registrar ANTES de client.start() para evitar race condition
+    client.once(Events.ClientReady, async () => {
+      if (client.user) {
+        await commandHandler.deployCommands(
+          process.env.DISCORD_TOKEN!,
+          client.user.id,
+          config.guildId,
+        );
+      }
+    });
+
     // Iniciar el bot
     await client.start(process.env.DISCORD_TOKEN!);
     
@@ -50,17 +63,6 @@ async function main() {
 
     // Inicializar servicio de Twitch
     await client.twitchService.initialize();
-
-    // Desplegar comandos cuando el bot esté listo
-    client.once('ready', async () => {
-      if (client.user) {
-        await commandHandler.deployCommands(
-          process.env.DISCORD_TOKEN!,
-          client.user.id,
-          config.guildId,
-        );
-      }
-    });
 
   } catch (error) {
     logger.error('Failed to start bot:', error);
