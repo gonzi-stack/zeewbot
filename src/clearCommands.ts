@@ -33,7 +33,7 @@ async function clearCommands() {
     // Preguntar si también quiere eliminar comandos globales
     logger.info('\n⚠️  ¿También quieres eliminar comandos GLOBALES?');
     logger.info('Esto afectará a TODOS los servidores donde esté el bot.');
-    logger.info('Si quieres eliminar comandos globales, ejecuta: npm run clear-commands:global');
+    logger.info('Si quieres eliminar comandos globales, ejecuta: pnpm run clear-commands:global');
 
   } catch (error) {
     logger.error('Error al eliminar comandos:', error);

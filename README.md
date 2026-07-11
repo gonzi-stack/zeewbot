@@ -86,16 +86,16 @@ docker-compose down
 
 ```bash
 # Instalar dependencias
-npm install
+pnpm install
 
 # Desarrollo con hot-reload
-npm run dev
+pnpm run dev
 
 # Compilar
-npm run build
+pnpm run build
 
 # Producción
-npm start
+pnpm start
 ```
 
 ## Configuración

@@ -43,7 +43,7 @@ export const command: ICommand = {
     const currentDuration = MusicService.formatDuration(current.info.length);
 
     let description =
-      `**♪ Ahora**\n` +
+      '**♪ Ahora**\n' +
       `[${current.info.title}](${current.info.uri ?? ''}) · \`${currentDuration}\`\n`;
 
     // Próximos tracks (máximo 10)

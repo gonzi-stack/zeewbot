@@ -21,7 +21,7 @@ services:
       - redis
     networks:
       - zeewbot-network
-    command: npm run dev
+    command: pnpm run dev
 
   redis:
     image: redis:7-alpine

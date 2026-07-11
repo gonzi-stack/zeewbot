@@ -2,7 +2,6 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
   EmbedBuilder,
-  GuildMember,
   MessageFlags,
 } from 'discord.js';
 import { ICommand } from '../interfaces/ICommand';

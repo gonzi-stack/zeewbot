@@ -4,7 +4,7 @@
 - **Project**: ZeewBot - Discord bot for Zeew Space
 - **Language**: TypeScript (Node.js)
 - **Framework**: discord.js v14
-- **Package Manager**: npm
+- **Package Manager**: pnpm
 
 ---
 
@@ -13,12 +13,12 @@
 ### Core Commands
 | Command | Description |
 |---------|-------------|
-| `npm install` | Install dependencies |
-| `npm run build` | Compile TypeScript to JavaScript (outputs to `dist/`) |
-| `npm run dev` | Run bot in development mode with watch |
-| `npm start` | Run compiled bot from `dist/` |
-| `npm run lint` | Run ESLint on `src/` |
-| `npm run lint:fix` | Run ESLint with auto-fix |
+| `pnpm install` | Install dependencies |
+| `pnpm run build` | Compile TypeScript to JavaScript (outputs to `dist/`) |
+| `pnpm run dev` | Run bot in development mode with watch |
+| `pnpm start` | Run compiled bot from `dist/` |
+| `pnpm run lint` | Run ESLint on `src/` |
+| `pnpm run lint:fix` | Run ESLint with auto-fix |
 
 ### Docker Commands
 | Command | Description |
@@ -34,13 +34,13 @@
 ### Slash Command Management
 | Command | Description |
 |---------|-------------|
-| `npm run manage-commands` | Deploy slash commands |
-| `npm run clear-commands` | Clear commands from test guild |
-| `npm run clear-commands:global` | Clear global commands |
+| `pnpm run manage-commands` | Deploy slash commands |
+| `pnpm run clear-commands` | Clear commands from test guild |
+| `pnpm run clear-commands:global` | Clear global commands |
 
 ### Testing
 - **No tests currently implemented**
-- When implementing tests: use `npm test` (add test framework as needed)
+- When implementing tests: use `pnpm test` (add test framework as needed)
 
 ---
 

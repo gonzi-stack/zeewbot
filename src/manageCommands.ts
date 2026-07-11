@@ -147,7 +147,7 @@ async function main() {
     case 'remove':
       if (!commandId) {
         logger.error('Debes especificar el ID del comando a eliminar');
-        logger.info('Uso: npm run manage-commands remove <command-id> [--global]');
+        logger.info('Uso: pnpm run manage-commands remove <command-id> [--global]');
         break;
       }
       const isGlobal = process.argv.includes('--global');
@@ -156,7 +156,7 @@ async function main() {
       
     default:
       logger.info('🤖 Administrador de Comandos de ZeewBot\n');
-      logger.info('Uso: npm run manage-commands <acción>\n');
+      logger.info('Uso: pnpm run manage-commands <acción>\n');
       logger.info('Acciones disponibles:');
       logger.info('  list              - Lista todos los comandos');
       logger.info('  clear-guild       - Elimina comandos del servidor');
@@ -165,9 +165,9 @@ async function main() {
       logger.info('  remove <id>       - Elimina un comando específico');
       logger.info('                      Agrega --global para comandos globales\n');
       logger.info('Ejemplos:');
-      logger.info('  npm run manage-commands list');
-      logger.info('  npm run manage-commands clear-guild');
-      logger.info('  npm run manage-commands remove 123456789 --global');
+      logger.info('  pnpm run manage-commands list');
+      logger.info('  pnpm run manage-commands clear-guild');
+      logger.info('  pnpm run manage-commands remove 123456789 --global');
   }
 }
 

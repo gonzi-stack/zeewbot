@@ -7,9 +7,7 @@ Esta guía te ayudará a gestionar los comandos, especialmente útil cuando tien
 Para ver todos los comandos registrados actualmente:
 
 ```bash
-npm run manage-commands list
-# o
-yarn manage-commands list
+pnpm run manage-commands list
 ```
 
 Esto mostrará:
@@ -24,9 +22,7 @@ Esto mostrará:
 Para eliminar SOLO los comandos del servidor actual:
 
 ```bash
-npm run clear-commands
-# o
-yarn clear-commands
+pnpm run clear-commands
 ```
 
 ### Opción 2: Administrador Completo
@@ -35,20 +31,20 @@ Para más control, usa el administrador de comandos:
 
 ```bash
 # Ver ayuda
-npm run manage-commands
+pnpm run manage-commands
 
 # Eliminar comandos del servidor
-npm run manage-commands clear-guild
+pnpm run manage-commands clear-guild
 
 # Eliminar comandos globales (¡CUIDADO!)
-npm run manage-commands clear-global
+pnpm run manage-commands clear-global
 
 # Eliminar TODOS los comandos
-npm run manage-commands clear-all
+pnpm run manage-commands clear-all
 
 # Eliminar un comando específico por ID
-npm run manage-commands remove 1234567890
-npm run manage-commands remove 1234567890 --global
+pnpm run manage-commands remove 1234567890
+pnpm run manage-commands remove 1234567890 --global
 ```
 
 ## ⚠️ Advertencias
@@ -62,22 +58,22 @@ npm run manage-commands remove 1234567890 --global
 
 1. **Listar comandos actuales**:
    ```bash
-   npm run manage-commands list
+   pnpm run manage-commands list
    ```
 
 2. **Eliminar comandos antiguos**:
    ```bash
-   npm run clear-commands
+   pnpm run clear-commands
    ```
 
 3. **Reiniciar el bot**:
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 4. **Verificar que los nuevos comandos estén registrados**:
    ```bash
-   npm run manage-commands list
+   pnpm run manage-commands list
    ```
 
 ## 🆘 Solución de Problemas

@@ -68,7 +68,7 @@ Las sugerencias de mejoras también se manejan como issues. Cuando crees una sug
 
 4. **Configura el entorno**:
    ```bash
-   npm install
+   pnpm install
    cp .env.example .env
    # Configura tu .env con un token de prueba
    ```
@@ -77,8 +77,8 @@ Las sugerencias de mejoras también se manejan como issues. Cuando crees una sug
 
 6. **Verifica** tu código:
    ```bash
-   npm run lint
-   npm run build
+   pnpm run lint
+   pnpm run build
    ```
 
 7. **Commit** tus cambios:
@@ -173,9 +173,9 @@ public async createTicket(member: GuildMember, reason?: string): Promise<TextCha
 ### Checklist para PR
 
 - [ ] Mi código sigue el estilo del proyecto
-- [ ] He ejecutado `npm run lint` sin errores
+- [ ] He ejecutado `pnpm run lint` sin errores
 - [ ] He agregado tests que prueban mi fix/feature
-- [ ] Todos los tests pasan (`npm test`)
+- [ ] Todos los tests pasan (`pnpm test`)
 - [ ] He actualizado la documentación
 - [ ] Mi código genera 0 warnings
 - [ ] He agregado comentarios en áreas complejas
@@ -191,8 +191,8 @@ Aunque actualmente no hay tests implementados, animamos a:
 ### Ejecutar Tests
 
 ```bash
-npm test          # Ejecutar todos los tests
-npm run test:watch # Ejecutar tests en modo watch
+pnpm test          # Ejecutar todos los tests
+pnpm run test:watch # Ejecutar tests en modo watch
 ```
 
 ## 🌟 Reconocimiento

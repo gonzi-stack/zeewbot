@@ -2,12 +2,10 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
   EmbedBuilder,
-  GuildMember,
   MessageFlags,
 } from 'discord.js';
 import { ICommand } from '../interfaces/ICommand';
 import { IBot } from '../interfaces/IBot';
-import { MusicService } from '../services/MusicService';
 import config from '../../config.json';
 import { requireSameVoiceChannel } from '../utils/voiceValidation';
 

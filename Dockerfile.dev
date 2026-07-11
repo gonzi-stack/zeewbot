@@ -1,17 +1,18 @@
 # Development stage
 FROM node:20-alpine
 
-# Instalar dependencias de compilación
-RUN apk add --no-cache python3 make g++
+# Instalar dependencias de compilación y pnpm
+RUN apk add --no-cache python3 make g++ && \
+    corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
 # Copiar archivos de configuración
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 COPY tsconfig.json ./
 
 # Instalar todas las dependencias (incluyendo dev)
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 # Crear directorio de logs
 RUN mkdir -p logs
@@ -20,4 +21,4 @@ RUN mkdir -p logs
 EXPOSE 9229
 
 # Comando por defecto para desarrollo
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]

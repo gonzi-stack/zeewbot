@@ -189,7 +189,7 @@ export class MusicService {
         try {
           await queue.lastMessage.edit({ components: [] });
         } catch (err) {
-          this.client.logger.warn(`No se pudo remover botones del mensaje:`, err);
+          this.client.logger.warn('No se pudo remover botones del mensaje:', err);
         }
       }
 
@@ -263,7 +263,7 @@ export class MusicService {
 
         const msg = await channel.send({
           embeds: [embed],
-          components: [getMusicActionRow(false)]
+          components: [getMusicActionRow(false)],
         });
         queue.lastMessage = msg;
       }

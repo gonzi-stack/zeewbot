@@ -12,7 +12,7 @@ help: ## Muestra esta ayuda
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "${YELLOW}%-15s${NC} %s\n", $$1, $$2}'
 
 install: ## Instala las dependencias
-	npm install
+	pnpm install
 
 build: ## Construye la imagen de Docker para producción
 	docker-compose build
@@ -53,10 +53,10 @@ clean: ## Limpia contenedores, volúmenes e imágenes
 	@echo "${GREEN}Limpieza completada${NC}"
 
 lint: ## Ejecuta el linter
-	npm run lint
+	pnpm run lint
 
 lint-fix: ## Corrige problemas de lint
-	npm run lint:fix
+	pnpm run lint:fix
 
 test: ## Ejecuta las pruebas (cuando las implementes)
 	@echo "${YELLOW}No hay pruebas implementadas aún${NC}"

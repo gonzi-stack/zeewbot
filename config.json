@@ -37,6 +37,11 @@
     "clientId": "",
     "clientSecret": "",
     "webhookSecret": "your-webhook-secret",
-    "webhookPort": 3000
+    "webhookPort": 3001
+  },
+  "nodelink": {
+    "name": "NodeLink",
+    "url": "localhost:2333",
+    "auth": "youshallnotpass"
   }
 }

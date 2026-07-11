@@ -1,28 +1,28 @@
 # Build stage
 FROM node:20-alpine AS builder
 
-# Instalar dependencias de compilación
-RUN apk add --no-cache python3 make g++
+# Instalar dependencias de compilación y pnpm
+RUN apk add --no-cache python3 make g++ && \
+    corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
 # Copiar archivos de configuración
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 COPY tsconfig.json ./
 
 # Instalar dependencias
-RUN npm install --production && \
-    npm install --only=development
+RUN pnpm install --frozen-lockfile
 
 # Copiar código fuente
 COPY src ./src
 COPY config.json ./
 
 # Compilar TypeScript
-RUN npm run build
+RUN pnpm run build
 
 # Limpiar dependencias de desarrollo
-RUN npm prune --production
+RUN pnpm prune --prod
 
 # Production stage
 FROM node:20-alpine
@@ -39,7 +39,7 @@ WORKDIR /app
 # Copiar archivos necesarios desde el builder
 COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
-COPY --from=builder --chown=nodejs:nodejs /app/package*.json ./
+COPY --from=builder --chown=nodejs:nodejs /app/package.json ./
 COPY --chown=nodejs:nodejs config.json ./
 
 # Crear directorio de logs
